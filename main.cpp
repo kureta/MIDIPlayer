@@ -10,8 +10,7 @@ double currentTime = 0.0;
 double accumulator = 0.0;
 
 
-int main()
-{
+int main() {
     using namespace std::literals;
 
     // Application window setup
