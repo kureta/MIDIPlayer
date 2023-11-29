@@ -9,8 +9,11 @@ MIDI::MIDI()
 
 MIDI::~MIDI()
 {
-    // Note Off: 128, 64, 40
-    midiout.send_message(128, notes[current_note], 40);
+    for (const Note item : notes)
+    {
+        // Note Off: 128, 64, 40
+        midiout.send_message(128, item.pitch, 40);
+    }
 }
 
 int MIDI::time_to_beat(double t)
@@ -23,19 +26,17 @@ int MIDI::time_to_beat(double t)
 // play each note for a constant duration.
 void MIDI::play_next_note(double t)
 {
-    using namespace std::literals;
+    // Note On: 144, 64, 90
+    midiout.send_message(144, notes[current_note].pitch, 90);
+    notes[current_note].triggered_on = t;
+    current_note = (current_note + 1) % notes.size();
 
-    const int beat = time_to_beat(t);
-
-    if (beat != current_beat)
+    for (const Note item : notes)
     {
-        const int next_note = (current_note + 1) % notes.size();
-        // Note Off: 128, 64, 40
-        midiout.send_message(128, notes[current_note], 40);
-
-        // Note On: 144, 64, 90
-        midiout.send_message(144, notes[next_note], 90);
-        current_note = next_note;
-        current_beat += 1;
+        if (t >= item.triggered_on + 0.5)
+        {
+            // Note Off: 128, 64, 40
+            midiout.send_message(128, item.pitch, 40);
+        }
     }
 }
