@@ -42,6 +42,5 @@ endif ()
 
 # ================= Other stuff =================
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
-add_executable(MIDIPlayer main.cpp
-        utils.hpp)
+add_executable(MIDIPlayer src/main.cpp src/utils.h src/RayApp.cpp src/RayApp.h src/Midi.cpp src/Midi.h)
 target_link_libraries(${PROJECT_NAME} raylib libremidi)
