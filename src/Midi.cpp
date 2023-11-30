@@ -30,13 +30,16 @@ void MIDI::play_next_note(double t)
     midiout.send_message(144, notes[current_note].pitch, 90);
     notes[current_note].triggered_on = t;
     current_note = (current_note + 1) % notes.size();
+}
 
-    for (const Note item : notes)
+void MIDI::update(const double t)
+{
+    for (const auto [pitch, triggered_on] : notes)
     {
-        if (t >= item.triggered_on + 0.5)
+        if (t >= triggered_on + 0.5)
         {
             // Note Off: 128, 64, 40
-            midiout.send_message(128, item.pitch, 40);
+            midiout.send_message(128, pitch, 40);
         }
     }
 }

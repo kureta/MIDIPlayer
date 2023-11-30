@@ -12,7 +12,7 @@ void RayApp::setup()
         static_cast<float>(GetScreenWidth()) / 2.0f,
         static_cast<float>(GetScreenHeight()) / 2.0f
     };
-    ballSpeed = {20.0f, 17.0f};
+    ballSpeed = {21.0f, 13.0f};
     ballRadius = 20.0f;
 
     pause = false;
@@ -29,6 +29,7 @@ void RayApp::update(const double t, const double dt)
 
     if (!pause)
     {
+        midi.update(t);
         ballPosition.x += ballSpeed.x;
         ballPosition.y += ballSpeed.y;
 

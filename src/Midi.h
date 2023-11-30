@@ -26,6 +26,7 @@ private:
 
 public:
     void play_next_note(double t);
+    void update(double t);
     MIDI();
     ~MIDI();
 };
